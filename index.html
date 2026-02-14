@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Noor Fatima</title>
+
+<style>
+body{
+margin:0;
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(135deg,#5f0f99,#ff007f);
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+text-align:center;
+}
+
+/* Falling Roses & Hearts */
+.fall{
+position:fixed;
+top:-50px;
+font-size:28px;
+animation: fall linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(-50px) rotate(0deg);}
+100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* Main Card */
+.container{
+background: rgba(255,255,255,0.15);
+backdrop-filter: blur(12px);
+padding:20px;
+border-radius:20px;
+width:95%;
+max-width:420px;
+box-shadow:0 0 20px pink;
+}
+
+.step{display:none;}
+.active{display:block;}
+
+button{
+padding:12px 26px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#ff00cc,#ff0000);
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:12px;
+}
+
+/* Cake */
+.cake{
+font-size:90px;
+cursor:pointer;
+animation: bounce 1s infinite;
+}
+@keyframes bounce{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.1);}
+}
+
+/* Photos */
+.photos img{
+width:110px;
+border-radius:12px;
+margin:5px;
+box-shadow:0 0 10px black;
+}
+
+/* Typing Effect */
+#letter{
+font-size:14px;
+background:white;
+color:black;
+padding:12px;
+border-radius:12px;
+min-height:140px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Background Song -->
+<audio id="song" src="song.mp3"></audio>
+
+<div class="container">
+
+<!-- STEP 1 -->
+<div id="step1" class="step active">
+<h2>Dear Noor Fatima 💜</h2>
+<p>A special birthday surprise for you</p>
+<button onclick="startSurprise()">Start Your Surprise</button>
+</div>
+
+<!-- STEP 2 -->
+<div id="step2" class="step">
+<h2>Who is it?</h2>
+<input id="nameInput" placeholder="Enter your name"
+style="padding:10px;border-radius:20px;border:none;text-align:center;">
+<br>
+<button onclick="checkName()">Enter</button>
+</div>
+
+<!-- STEP 3 -->
+<div id="step3" class="step">
+<h2>For My Sweet Sister 🌹</h2>
+<p>Tap the heart</p>
+<div style="font-size:80px;cursor:pointer;" onclick="nextStep(4)">❤️</div>
+</div>
+
+<!-- STEP 4 CAKE -->
+<div id="step4" class="step">
+<h2>Cut the Cake 🎂</h2>
+<div class="cake" onclick="nextStep(5)">🎂</div>
+<p>Tap the cake to cut!</p>
+</div>
+
+<!-- STEP 5 PHOTOS -->
+<div id="step5" class="step">
+<h2>Beautiful Memories 📸</h2>
+<div class="photos">
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+</div>
+<button onclick="nextStep(6)">Open Letter 💌</button>
+</div>
+
+<!-- STEP 6 LOVE LETTER -->
+<div id="step6" class="step">
+<h2>💌 Letter for Noor Fatima</h2>
+<div id="letter"></div>
+<button onclick="showFinal()">Final Surprise 🎉</button>
+</div>
+
+<!-- STEP 7 FINAL -->
+<div id="step7" class="step">
+<h1>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h1>
+<p>You are the best sister in the world 💖</p>
+<button onclick="location.reload()">Replay</button>
+</div>
+
+</div>
+
+<script>
+// Step system
+function nextStep(n){
+document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+document.getElementById("step"+n).classList.add("active");
+}
+
+// Start
+function startSurprise(){
+document.getElementById("song").play();
+nextStep(2);
+startFalling();
+}
+
+// Name check
+function checkName(){
+let n=document.getElementById("nameInput").value.toLowerCase();
+if(n.includes("noor")) nextStep(3);
+else alert("Type Noor Fatima 😁");
+}
+
+// Final
+function showFinal(){
+nextStep(7);
+fireworks();
+}
+
+// Falling roses & hearts
+function startFalling(){
+setInterval(()=>{
+let e=document.createElement("div");
+e.className="fall";
+e.innerHTML=Math.random()>0.5?"🌹":"❤️";
+e.style.left=Math.random()*100+"vw";
+e.style.animationDuration=(Math.random()*3+4)+"s";
+document.body.appendChild(e);
+setTimeout(()=>e.remove(),7000);
+},250);
+}
+
+// Typing Letter
+let text=`Dear Noor Fatima,
+
+You are not just my sister, you are my best friend 💜
+May Allah bless you with happiness, success, and long life.
+Always keep smiling and shining like a star ⭐
+
+With love,
+Your Brother`;
+let i=0;
+function typeLetter(){
+if(i<text.length){
+document.getElementById("letter").innerHTML += text.charAt(i);
+i++;
+setTimeout(typeLetter,40);
+}
+}
+document.getElementById("step6").addEventListener("click", typeLetter);
+
+// Fireworks effect
+function fireworks(){
+for(let i=0;i<200;i++){
+let f=document.createElement("div");
+f.style.position="fixed";
+f.style.width="6px";
+f.style.height="6px";
+f.style.background="white";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*100+"vh";
+f.style.opacity=Math.random();
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),2000);
+}
+}
+</script>
+
+</body>
+</html>
