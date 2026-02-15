@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
 <style>
 body{
 margin:0;
-font-family: 'Segoe UI', sans-serif;
+font-family: Arial;
 background: linear-gradient(135deg,#5f0f99,#ff007f);
 height:100vh;
 overflow:hidden;
@@ -19,7 +19,7 @@ color:white;
 text-align:center;
 }
 
-/* Falling Roses & Hearts */
+/* Falling Roses */
 .fall{
 position:fixed;
 top:-50px;
@@ -31,7 +31,7 @@ animation: fall linear infinite;
 100%{transform:translateY(110vh) rotate(360deg);}
 }
 
-/* Main Card */
+/* Card */
 .container{
 background: rgba(255,255,255,0.15);
 backdrop-filter: blur(12px);
@@ -46,14 +46,14 @@ box-shadow:0 0 20px pink;
 .active{display:block;}
 
 button{
-padding:12px 26px;
+padding:12px 25px;
 border:none;
 border-radius:30px;
 background:linear-gradient(45deg,#ff00cc,#ff0000);
 color:white;
 font-size:16px;
 cursor:pointer;
-margin-top:12px;
+margin-top:10px;
 }
 
 /* Cake */
@@ -69,39 +69,49 @@ animation: bounce 1s infinite;
 
 /* Photos */
 .photos img{
-width:110px;
+width:120px;
 border-radius:12px;
 margin:5px;
 box-shadow:0 0 10px black;
 }
 
-/* Typing Effect */
+/* Letter */
 #letter{
 font-size:14px;
 background:white;
 color:black;
 padding:12px;
 border-radius:12px;
+white-space:pre-line;
 min-height:140px;
+}
+
+/* WhatsApp */
+.whatsapp{
+background:#25D366;
+color:black;
+padding:12px;
+border-radius:25px;
+display:inline-block;
+text-decoration:none;
+font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 Background Song -->
-<audio id="song" src="song.mp3"></audio>
+<!-- 🎵 Birthday Song -->
+<audio id="song" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
 
 <div class="container">
 
-<!-- STEP 1 -->
 <div id="step1" class="step active">
 <h2>Dear Noor Fatima 💜</h2>
-<p>A special birthday surprise for you</p>
+<p>A Special Birthday Surprise For You</p>
 <button onclick="startSurprise()">Start Your Surprise</button>
 </div>
 
-<!-- STEP 2 -->
 <div id="step2" class="step">
 <h2>Who is it?</h2>
 <input id="nameInput" placeholder="Enter your name"
@@ -110,74 +120,70 @@ style="padding:10px;border-radius:20px;border:none;text-align:center;">
 <button onclick="checkName()">Enter</button>
 </div>
 
-<!-- STEP 3 -->
 <div id="step3" class="step">
 <h2>For My Sweet Sister 🌹</h2>
-<p>Tap the heart</p>
 <div style="font-size:80px;cursor:pointer;" onclick="nextStep(4)">❤️</div>
+<p>Tap the heart</p>
 </div>
 
-<!-- STEP 4 CAKE -->
 <div id="step4" class="step">
 <h2>Cut the Cake 🎂</h2>
 <div class="cake" onclick="nextStep(5)">🎂</div>
-<p>Tap the cake to cut!</p>
+<p>Tap the cake</p>
 </div>
 
-<!-- STEP 5 PHOTOS -->
 <div id="step5" class="step">
 <h2>Beautiful Memories 📸</h2>
 <div class="photos">
-<img src="photo1.jpg">
-<img src="photo2.jpg">
+<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
+<img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91">
 </div>
 <button onclick="nextStep(6)">Open Letter 💌</button>
 </div>
 
-<!-- STEP 6 LOVE LETTER -->
 <div id="step6" class="step">
 <h2>💌 Letter for Noor Fatima</h2>
 <div id="letter"></div>
 <button onclick="showFinal()">Final Surprise 🎉</button>
 </div>
 
-<!-- STEP 7 FINAL -->
 <div id="step7" class="step">
 <h1>🎉 HAPPY BIRTHDAY NOOR FATIMA 🎉</h1>
 <p>You are the best sister in the world 💖</p>
+
+<a class="whatsapp" href="https://wa.me/923256437933?text=Thank%20you%20brother%20for%20this%20beautiful%20birthday%20surprise%20💖" target="_blank">
+Send Love on WhatsApp ❤️
+</a>
+
+<br><br>
 <button onclick="location.reload()">Replay</button>
 </div>
 
 </div>
 
 <script>
-// Step system
 function nextStep(n){
 document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
 document.getElementById("step"+n).classList.add("active");
 }
 
-// Start
 function startSurprise(){
 document.getElementById("song").play();
 nextStep(2);
 startFalling();
 }
 
-// Name check
 function checkName(){
 let n=document.getElementById("nameInput").value.toLowerCase();
 if(n.includes("noor")) nextStep(3);
 else alert("Type Noor Fatima 😁");
 }
 
-// Final
 function showFinal(){
 nextStep(7);
 fireworks();
 }
 
-// Falling roses & hearts
 function startFalling(){
 setInterval(()=>{
 let e=document.createElement("div");
@@ -190,7 +196,6 @@ setTimeout(()=>e.remove(),7000);
 },250);
 }
 
-// Typing Letter
 let text=`Dear Noor Fatima,
 
 You are not just my sister, you are my best friend 💜
@@ -207,9 +212,8 @@ i++;
 setTimeout(typeLetter,40);
 }
 }
-document.getElementById("step6").addEventListener("click", typeLetter);
+document.getElementById("step6").onclick = typeLetter;
 
-// Fireworks effect
 function fireworks(){
 for(let i=0;i<200;i++){
 let f=document.createElement("div");
